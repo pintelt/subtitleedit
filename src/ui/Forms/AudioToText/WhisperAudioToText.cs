@@ -931,7 +931,7 @@ namespace Nikse.SubtitleEdit.Forms.AudioToText
             var sw = Stopwatch.StartNew();
             _outputText.Add($"Calling whisper ({Configuration.Settings.Tools.WhisperChoice}) with : {process.StartInfo.FileName} {process.StartInfo.Arguments}{Environment.NewLine}");
             _startTicks = Stopwatch.GetTimestamp();
-            _videoInfo = UiUtil.GetVideoInfo(waveFileName);
+            _videoInfo = UiUtil.GetVideoInfo(videoFileName);
             timer1.Start();
             if (!_batchMode)
             {
@@ -1599,7 +1599,7 @@ namespace Nikse.SubtitleEdit.Forms.AudioToText
                 progressBar1.Maximum = 100;
             }
 
-            _videoInfo.TotalSeconds = Math.Max(_endSeconds, _videoInfo.TotalSeconds);
+            //_videoInfo.TotalSeconds = Math.Max(_endSeconds, _videoInfo.TotalSeconds);
             var msPerFrame = durationMs / (_endSeconds * 1000.0);
             var estimatedTotalMs = msPerFrame * _videoInfo.TotalMilliseconds;
             var msEstimatedLeft = estimatedTotalMs - durationMs;
