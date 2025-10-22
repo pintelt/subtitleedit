@@ -8598,11 +8598,11 @@ namespace Nikse.SubtitleEdit.Forms
         private void LiveSpellCheckTimer_Tick(object sender, EventArgs e)
         {
             _liveSpellCheckTimer.Stop();
-            InitializeLiveSpellChcek();
+            InitializeLiveSpellCheck();
             _liveSpellCheckTimer.Start();
         }
 
-        private void InitializeLiveSpellChcek()
+        private void InitializeLiveSpellCheck()
         {
             if (IsSubtitleLoaded)
             {
@@ -23954,6 +23954,7 @@ namespace Nikse.SubtitleEdit.Forms
                             ShowStatus(string.Empty, false);
                             if (string.IsNullOrEmpty(_videoFileName) || !File.Exists(_videoFileName))
                             {
+                                Cursor = Cursors.Default;
                                 return;
                             }
 
@@ -28750,7 +28751,42 @@ namespace Nikse.SubtitleEdit.Forms
                 var tb = GetFocusedTextBox();
                 if (tb.Enabled)
                 {
-                    TaskDelayHelper.RunDelayed(TimeSpan.FromMilliseconds(1), () => { tb.Paste(); });
+                    TaskDelayHelper.RunDelayed(TimeSpan.FromMilliseconds(2), () => 
+                    {
+                        try
+                        {
+                            tb.Paste();
+                        }
+                        catch
+                        {
+                            TaskDelayHelper.RunDelayed(TimeSpan.FromMilliseconds(25), () =>
+                            {
+                                try
+                                {
+                                    tb.Paste();
+                                }
+                                catch
+                                {
+                                    TaskDelayHelper.RunDelayed(TimeSpan.FromMilliseconds(25), () =>
+                                    {
+                                        try
+                                        {
+                                            tb.Paste();
+                                        }
+                                        catch
+                                        {
+                                            // ignore
+                                        }
+                                    });
+
+                                }
+                            });
+                        }
+                        finally
+                        {
+                            Cursor = Cursors.Default;
+                        }
+                    });
                 }
             }
         }
