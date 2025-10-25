@@ -1599,7 +1599,7 @@ namespace Nikse.SubtitleEdit.Forms.AudioToText
                 progressBar1.Maximum = 100;
             }
 
-            //_videoInfo.TotalSeconds = Math.Max(_endSeconds, _videoInfo.TotalSeconds);
+            _videoInfo.TotalSeconds = Math.Max(_endSeconds, _videoInfo.TotalSeconds);
             var msPerFrame = durationMs / (_endSeconds * 1000.0);
             var estimatedTotalMs = msPerFrame * _videoInfo.TotalMilliseconds;
             var msEstimatedLeft = estimatedTotalMs - durationMs;
